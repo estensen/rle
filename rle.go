@@ -2,25 +2,39 @@ package rle
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
 func Encode(seq string) string {
-	var compressed strings.Builder
+	var encoded strings.Builder
 	count := 1
 	char := seq[0]
 
 	for i := 1; i < len(seq); i++ {
-		fmt.Println(i)
 		if seq[i] == char {
 			count += 1
 		} else {
-			compressed.WriteString(fmt.Sprintf("%c%d", char, count))
+			encoded.WriteString(fmt.Sprintf("%c%d", char, count))
 			char = seq[i]
 			count = 1
 		}
 	}
 
-	compressed.WriteString(fmt.Sprintf("%c%d", char, count))
-	return compressed.String()
+	encoded.WriteString(fmt.Sprintf("%c%d", char, count))
+	return encoded.String()
+}
+
+func Decode(encoded string) string {
+	var decoded strings.Builder
+
+	for i := 1; i <= len(encoded); i += 2 {
+		char := encoded[i-1]
+		count, _ := strconv.Atoi(string(encoded[i]))
+		for j := 0; j < count; j++ {
+			decoded.WriteString(fmt.Sprintf("%c", char))
+		}
+	}
+
+	return decoded.String()
 }
