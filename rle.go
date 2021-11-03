@@ -7,6 +7,10 @@ import (
 )
 
 func Encode(seq string) string {
+	if seq == "" {
+		return ""
+	}
+
 	var encoded strings.Builder
 	count := 1
 	char := seq[0]
@@ -26,6 +30,10 @@ func Encode(seq string) string {
 }
 
 func Decode(encoded string) string {
+	if encoded == "" {
+		return ""
+	}
+
 	var decoded strings.Builder
 
 	for i := 1; i <= len(encoded); i += 2 {
